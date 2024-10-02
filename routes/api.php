@@ -20,15 +20,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post("/auth/login", [authController::class, "login"]);
+Route::post("auth/logout", [authController::class, "logout"])->middleware("auth:sanctum");
 Route::post("/auth/signup", [authController::class, "signup"]);
 
 
+
+
+
+Route::middleware('auth:sanctum')->group(function () {
 Route::get("/employee", [EmployeController::class, "index"])->name('employee');
 Route::get("/employee/{id}", [EmployeController::class, "show"]);
 
 Route::post('/employees', [EmployeController::class, 'store']);
 
 Route::delete('/employees/{id}', [EmployeController::class,"destroy"]);
+});
 
 
 //Route::apiResource('post', EmployeController::class);
